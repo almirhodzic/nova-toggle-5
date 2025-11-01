@@ -31,6 +31,14 @@ Please note that this software is provided "as is", without warranty of any kind
 
 We appreciate your feedback and bug reports to help improve this package!
 
+### 🐛 Found a Bug or Issue?
+
+I would greatly appreciate if you could report any bugs, irregularities, or unexpected behavior you encounter. Your feedback helps make this package better for everyone!
+
+Please report issues here: [GitHub Issues](https://github.com/almirhodzic/nova-toggle/issues)
+
+**Thank you for your help!** 🙏
+
 ## Installation
 
 ```bash

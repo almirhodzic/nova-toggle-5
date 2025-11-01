@@ -48,7 +48,12 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/pest"
+        "post-install-cmd": [
+            "@php -r \"file_exists('node_modules') || (shell_exec('npm install') && shell_exec('npm run build'));\""
+        ],
+        "post-update-cmd": [
+            "@php -r \"shell_exec('npm install') && shell_exec('npm run build');\""
+        ]
     },
     "config": {
         "sort-packages": true,

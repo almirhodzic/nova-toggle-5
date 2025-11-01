@@ -2,7 +2,6 @@
     "name": "almirhodzic/nova-toggle",
     "description": "A Laravel Nova 5 toggle field that allows quick boolean updates directly from the index view.",
     "type": "library",
-    "version": "1.0.0",
     "keywords": [
         "laravel",
         "nova",

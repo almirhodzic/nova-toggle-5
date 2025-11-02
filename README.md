@@ -37,7 +37,7 @@ Please note that this software is provided "as is", without warranty of any kind
 - The author(s) shall not be held liable for any damages, data loss, or issues arising from the use of this package
 - It is recommended to thoroughly test the package in a development environment before using it in production
 
-We appreciate your feedback and bug reports to help improve this package! Thank you 🙏
+We appreciate your feedback to help improve this package! Thank you 🙏
 
 Found a Bug or Issue? Please report here: [GitHub Issues](https://github.com/almirhodzic/nova-toggle/issues)
 

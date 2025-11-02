@@ -2,24 +2,30 @@
 
 A Laravel Nova 5 toggle field that allows quick boolean updates directly from the index view.
 
+Demo: ![https://demo.novafront.dev](https://demo.novafront.dev)  
+User: ![demo@novafront.dev](demo@novafront.dev)  
+Password: demo1234
+
+![Nova-Toggle 5](https://demo.novafront.dev/images/hero/IndexToggle.webp)
+
 ![License: MIT-NC](https://img.shields.io/badge/License-MIT--NC-blue.svg)
 ![Nova](https://img.shields.io/badge/Nova-5.x-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-blue.svg)
 
 ## Features
 
-- 🎯 Quick toggle directly from index view
-- 🎨 Customizable colors for light and dark mode
-- 🔒 Built-in readonly and visibility controls
-- 💡 Optional help text for different views
-- 🏷️ Custom ON/OFF labels with color customization
-- 🔕 Optional toast notification control
-- 🏷️ Customizable toast message labels
-- 🔍 Filter support for index views
-- ⚡ Vue 3 Composition API
-- 🌓 Full dark mode support
+- Quick toggle directly from index view
+- Customizable colors for light and dark mode
+- Built-in readonly and visibility controls
+- Optional help text for different views
+- Custom ON/OFF labels with color customization
+- Optional toast notification control
+- Customizable toast message labels
+- Filter support for index views
+- Vue 3 Composition API
+- Full dark mode support
 
-## ⚠️ Beta Notice
+## Beta Notice
 
 **This package is currently in beta phase.**
 
@@ -33,7 +39,7 @@ Please note that this software is provided "as is", without warranty of any kind
 
 We appreciate your feedback and bug reports to help improve this package!
 
-### 🐛 Found a Bug or Issue?
+### Found a Bug or Issue?
 
 I would greatly appreciate if you could report any bugs, irregularities, or unexpected behavior you encounter. Your feedback helps make this package better for everyone!
 
@@ -78,8 +84,8 @@ Toggle::make('Active', 'is_active')
 
 ```php
 Toggle::make('Active', 'is_active')
-    ->onBullet('#ffffff')              // Same for both modes
-    ->offBullet('#ffffff', '#cccccc'); // Light mode, Dark mode
+    ->onBullet('white')           // Same for both modes
+    ->offBullet('white', 'grey'); // Light mode, Dark mode
 ```
 
 ### Labels
@@ -240,7 +246,7 @@ Toggle::make('Active', 'is_active')
     ->helpOnIndex('Toggle to activate/deactivate')
     ->helpOnForm('Enable this option to activate the feature')
     ->helpOnDetail('Current activation status');
-````
+```
 
 ### Visibility & Access Control
 

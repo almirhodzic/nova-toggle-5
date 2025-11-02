@@ -2,9 +2,9 @@
 
 A Laravel Nova 5 toggle field that allows quick boolean updates directly from the index view.
 
-Demo: https://demo.novafront.dev/admin 
-User: demo@nobafront.dev
-Password: demo1234
+Demo: https://demo.novafront.dev/admin  
+User: demo@nobafront.dev  
+Password: demo1234  
 
 ![License: MIT-NC](https://img.shields.io/badge/License-MIT--NC-blue.svg)
 ![Nova](https://img.shields.io/badge/Nova-5.x-blue.svg)

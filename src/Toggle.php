@@ -2,6 +2,8 @@
 
 namespace AlmirHodzic\NovaToggle;
 
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Filters\BooleanFilter;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Http\Request;
@@ -31,6 +33,7 @@ class Toggle extends Field
     protected $offLabelColorDark = '#737373';
     protected $toastShow = true;
     protected $toastLabelKey = null;
+    protected $shouldBeFilterable = false;
 
     public function __construct($name, $attribute = null, ?callable $resolveCallback = null)
     {
@@ -126,6 +129,42 @@ class Toggle extends Field
     {
         $this->toastShow = $show;
         return $this;
+    }
+
+    /**
+     * Make the field filterable.
+     */
+    public function filterable(): self
+    {
+        $this->shouldBeFilterable = true;
+        return $this;
+    }
+
+    /**
+     * Return the filterable attribute for the field.
+     */
+    public function serializeForFilter()
+    {
+        if ($this->shouldBeFilterable) {
+            // Create a Boolean field for filtering
+            return Boolean::make($this->name, $this->attribute)
+                ->filterable()
+                ->serializeForFilter();
+        }
+
+        return parent::serializeForFilter();
+    }
+
+    /**
+     * Define the filterable callback.
+     */
+    protected function makeFilter(NovaRequest $request)
+    {
+        if ($this->shouldBeFilterable) {
+            return new BooleanFilter($this->attribute);
+        }
+
+        return null;
     }
 
     public function jsonSerialize(): array

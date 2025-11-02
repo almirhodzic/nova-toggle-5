@@ -15,6 +15,7 @@ A Laravel Nova 5 toggle field that allows quick boolean updates directly from th
 - 🏷️ Custom ON/OFF labels with color customization
 - 🔕 Optional toast notification control
 - 🏷️ Customizable toast message labels
+- 🔍 Filter support for index views
 - ⚡ Vue 3 Composition API
 - 🌓 Full dark mode support
 
@@ -119,6 +120,109 @@ Toggle::make('Active', 'is_active')
     ->toastShow(false); // No toast notification on toggle
 ```
 
+### Filtering
+
+To make your toggle field filterable in the index view, you need to create a custom filter.
+
+#### Step 1: Create a Filter
+
+```bash
+php artisan nova:filter IsActiveFilter
+```
+
+#### Step 2: Implement the Filter
+
+```php
+<?php
+
+namespace App\Nova\Filters;
+
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Laravel\Nova\Filters\Filter;
+use Laravel\Nova\Http\Requests\NovaRequest;
+
+class IsActiveFilter extends Filter
+{
+    public $name = 'Active Status';
+
+    public $component = 'select-filter';
+
+    public function apply(NovaRequest $request, Builder $query, mixed $value): Builder
+    {
+        if ($value === 'active') {
+            return $query->where('is_active', true);
+        }
+
+        if ($value === 'inactive') {
+            return $query->where('is_active', false);
+        }
+
+        return $query;
+    }
+
+    public function options(NovaRequest $request): array
+    {
+        return [
+            'Active' => 'active',
+            'Inactive' => 'inactive',
+        ];
+    }
+}
+```
+
+#### Step 3: Register the Filter in Your Resource
+
+```php
+use App\Nova\Filters\IsActiveFilter;
+
+public function filters(NovaRequest $request): array
+{
+    return [
+        new IsActiveFilter,
+    ];
+}
+```
+
+**Alternative: Boolean Filter (Checkboxes)**
+
+If you prefer checkboxes instead of a dropdown:
+
+```php
+<?php
+
+namespace App\Nova\Filters;
+
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Laravel\Nova\Filters\BooleanFilter;
+use Laravel\Nova\Http\Requests\NovaRequest;
+
+class IsActiveFilter extends BooleanFilter
+{
+    public $name = 'Active Status';
+
+    public function apply(NovaRequest $request, Builder $query, mixed $value): Builder
+    {
+        if (isset($value['active'])) {
+            return $query->where('is_active', $value['active']);
+        }
+
+        if (isset($value['inactive'])) {
+            return $query->where('is_active', !$value['inactive']);
+        }
+
+        return $query;
+    }
+
+    public function options(NovaRequest $request): array
+    {
+        return [
+            'Active' => 'active',
+            'Inactive' => 'inactive',
+        ];
+    }
+}
+```
+
 ### Help Text
 
 Add contextual help text for different views:
@@ -165,6 +269,7 @@ return [
 
 ```php
 use AlmirHodzic\NovaToggle\Toggle;
+use App\Nova\Filters\IsActiveFilter;
 
 public function fields(NovaRequest $request)
 {
@@ -200,6 +305,13 @@ public function fields(NovaRequest $request)
         Toggle::make('Show FAQ', 'show')
             ->toastLabelKey('question') // Uses $faq->question for toast message
             ->helpOnIndex('Toggle visibility'),
+    ];
+}
+
+public function filters(NovaRequest $request): array
+{
+    return [
+        new IsActiveFilter,
     ];
 }
 ```

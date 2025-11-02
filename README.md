@@ -3,7 +3,7 @@
 A Laravel Nova 5 toggle field that allows quick boolean updates directly from the index view.
 
 Demo: https://demo.novafront.dev/admin  
-User: demo@nobafront.dev  
+User: demo@novafront.dev  
 Password: demo1234  
 
 ![License: MIT-NC](https://img.shields.io/badge/License-MIT--NC-blue.svg)

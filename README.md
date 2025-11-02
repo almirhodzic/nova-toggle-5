@@ -39,9 +39,7 @@ Please note that this software is provided "as is", without warranty of any kind
 
 We appreciate your feedback and bug reports to help improve this package! Thank you 🙏
 
-### Found a Bug or Issue?
-
-Please report here: [GitHub Issues](https://github.com/almirhodzic/nova-toggle/issues)
+Found a Bug or Issue? Please report here: [GitHub Issues](https://github.com/almirhodzic/nova-toggle/issues)
 
 ## Installation
 

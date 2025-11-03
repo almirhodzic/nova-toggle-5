@@ -25,10 +25,11 @@ Password: demo1234
 - Vue 3 Composition API
 - Full dark mode support
 
-## Bug or Issues
+## Requirements
 
-Found a Bug or Issue? Please report here: [GitHub Issues](https://github.com/almirhodzic/nova-toggle/issues)  
-We appreciate your feedback to help improve this package.
+- PHP 8.2+
+- Laravel Nova 5.x
+- Laravel 10.x, 11.x, or 12.x
 
 ## Installation
 
@@ -353,11 +354,10 @@ public function filters(NovaRequest $request): array
 | `toastShow`     | `true`                                                                 |
 | `toastLabelKey` | `null` (uses fallback: name → label → title → resource singular label) |
 
-## Requirements
+## Bug or Issues
 
-- PHP 8.2+
-- Laravel Nova 5.x
-- Laravel 10.x, 11.x, or 12.x
+Found a Bug or Issue? Please report here: [GitHub Issues](https://github.com/almirhodzic/nova-toggle/issues)  
+We appreciate your feedback to help improve this package.
 
 ## Support
 

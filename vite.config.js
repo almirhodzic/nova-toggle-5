@@ -14,18 +14,10 @@ export default defineConfig({
             fileName: () => 'js/toggle.js',
         },
         rollupOptions: {
-            external: [
-                'vue',
-                '@/mixins', // <- NEU
-                'laravel-nova-ui', // <- NEU
-            ],
+            external: ['vue', 'laravel-nova-ui'],
             output: {
                 globals: {
                     vue: 'Vue',
-                },
-                assetFileNames: (assetInfo) => {
-                    if (assetInfo.name === 'style.css') return 'css/toggle.css';
-                    return assetInfo.name;
                 },
             },
         },

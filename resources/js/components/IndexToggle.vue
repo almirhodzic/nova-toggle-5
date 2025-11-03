@@ -187,15 +187,12 @@ const handleChange = async () => {
 
     try {
         const url = `/nova-vendor/nova-toggle/toggle/${props.resourceName}/${id.value}`;
-        console.log('Toggle request:', {
-            url,
-            attribute: props.field.attribute,
-        });
 
         const res = await Nova.request().post(url, {
             attribute: props.field.attribute,
             labelKey: props.field.toastLabelKey,
         });
+
 
         if (res.data?.success) {
             value.value = !!res.data.value;

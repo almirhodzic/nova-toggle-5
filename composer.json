@@ -15,17 +15,17 @@
     "authors": [
         {
             "name": "Almir Hodzic",
-            "email": "hello@novafront.dev",
-            "homepage": "https://staging.novafront.dev",
+            "email": "hello@frontbyte.ch",
+            "homepage": "https://demo.novafront.dev",
             "role": "Developer"
         }
     ],
     "support": {
         "issues": "https://github.com/almirhodzic/nova-toggle/issues",
         "source": "https://github.com/almirhodzic/nova-toggle",
-        "docs": "https://staging.novafront.dev/nova-toggle/docs"
+        "docs": "https://github.com/almirhodzic/nova-toggle"
     },
-    "homepage": "https://staging.novafront.dev",
+    "homepage": "https://demo.novafront.dev",
     "require": {
         "php": "^8.2",
         "laravel/nova": "^5.0"

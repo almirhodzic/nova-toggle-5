@@ -6,8 +6,10 @@
 -->
 <template>
     <div class="flex items-center gap-2" @click.stop>
+        <!-- Empty placeholder when field is hidden -->
         <div v-if="field.hidden" class="h-5 w-10"></div>
 
+        <!-- Toggle switch with label and help text -->
         <div
             v-else
             class="flex items-center gap-2"
@@ -15,12 +17,14 @@
                 loading || field.readonly ? 'cursor-default' : 'cursor-pointer'
             "
         >
+            <!-- Toggle switch wrapper -->
             <label
                 class="group disabled:pointer-events-non relative inline-flex h-5 w-10 shrink-0 items-center overflow-hidden rounded-full inset-ring inset-ring-gray-900/5 outline-offset-2 outline-indigo-600 transition-colors duration-200 ease-in-out disabled:opacity-50 has-focus-visible:outline-2"
                 :class="labelClasses"
                 :style="[{ padding: '2.01px' }, wrapperStyle]"
                 @click.stop
             >
+                <!-- ON/OFF label text overlay -->
                 <span
                     v-if="field.onLabel || field.offLabel"
                     class="pointer-events-none absolute inset-0 flex items-center font-medium tracking-wide uppercase"
@@ -30,6 +34,7 @@
                     {{ value ? field.onLabel : field.offLabel }}
                 </span>
 
+                <!-- Hidden checkbox input for accessibility -->
                 <input
                     type="checkbox"
                     :class="inputClasses"
@@ -42,12 +47,14 @@
                     @click.stop
                 />
 
+                <!-- Sliding bullet/circle indicator -->
                 <span
                     class="inline-block h-4 w-4 rounded-full shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out"
                     :style="bulletStyle"
                 />
             </label>
 
+            <!-- Optional help text -->
             <p
                 v-if="field.helpOnIndex && !field.hidden"
                 class="help-text text-xs italic"
@@ -61,6 +68,10 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
+/**
+ * Field configuration interface
+ * Contains all customization options for the toggle field
+ */
 interface Field {
     value?: boolean;
     attribute: string;
@@ -86,6 +97,9 @@ interface Field {
     toastLabelKey?: string;
 }
 
+/**
+ * Component props interface
+ */
 interface Props {
     field: Field;
     resourceName: string;
@@ -97,13 +111,17 @@ const props = defineProps<Props>();
 
 declare const Nova: any;
 
+// State
 const loading = ref(false);
 const value = ref<boolean>(props.field.value ?? false);
 const isDark = ref(false);
 
-// Robuste ID-Ermittlung
+/**
+ * Robust resource ID extraction
+ * Tries multiple sources to find the resource ID with fallback priority
+ */
 const id = computed(() => {
-    // Priorität: resourceId > resource.id.value > resource.id
+    // Priority: resourceId > resource.id.value > resource.id
     if (props.resourceId) return props.resourceId;
     if (props.resource?.id?.value) return props.resource.id.value;
     if (props.resource?.id) return props.resource.id;
@@ -118,17 +136,28 @@ const id = computed(() => {
 
 let mediaQuery: MediaQueryList | null = null;
 
-// Computed
+/**
+ * Dynamic classes for the checkbox input
+ * Changes cursor based on loading/readonly state
+ */
 const inputClasses = computed(() =>
     loading.value || props.field.readonly ? 'cursor-default' : 'cursor-pointer',
 );
 
+/**
+ * Dynamic classes for the label wrapper
+ * Handles disabled state styling
+ */
 const labelClasses = computed(() => [
     loading.value || props.field.readonly
         ? 'pointer-events-none cursor-default opacity-50'
         : 'cursor-pointer opacity-100',
 ]);
 
+/**
+ * Dynamic styles for ON/OFF label text
+ * Adjusts color based on toggle state and color scheme
+ */
 const labelTextStyle = computed(() => ({
     color: value.value
         ? isDark.value
@@ -141,6 +170,10 @@ const labelTextStyle = computed(() => ({
     padding: '0 6px',
 }));
 
+/**
+ * Dynamic styles for the sliding bullet
+ * Handles color and position based on toggle state
+ */
 const bulletStyle = computed(() => {
     const onColor = isDark.value
         ? props.field.onBulletColorDark
@@ -155,6 +188,10 @@ const bulletStyle = computed(() => {
     };
 });
 
+/**
+ * Dynamic styles for the toggle background
+ * Changes background color based on toggle state and color scheme
+ */
 const wrapperStyle = computed(() => {
     const onColor = isDark.value
         ? props.field.onColorDark
@@ -168,19 +205,23 @@ const wrapperStyle = computed(() => {
     };
 });
 
-// Methods
+/**
+ * Handle toggle state change
+ * Sends AJAX request to update the resource attribute and handles response
+ */
 const handleChange = async () => {
     if (props.field.readonly || loading.value) {
         return;
     }
 
-    // ID-Check vor dem Request
+    // Validate resource ID before making request
     if (!id.value) {
         Nova.$toasted?.show('Error: Resource ID not found', { type: 'error' });
         console.error('Cannot toggle: No resource ID', props);
         return;
     }
 
+    // Optimistic UI update
     const prev = value.value;
     value.value = !prev;
     loading.value = true;
@@ -193,10 +234,11 @@ const handleChange = async () => {
             labelKey: props.field.toastLabelKey,
         });
 
-
         if (res.data?.success) {
+            // Update with server response
             value.value = !!res.data.value;
 
+            // Show success toast notification if enabled
             if (props.field.toastShow !== false) {
                 const getToastMessage = () => {
                     const action = value.value ? 'activated' : 'deactivated';
@@ -211,6 +253,8 @@ const handleChange = async () => {
         }
     } catch (e: any) {
         console.error('Toggle error:', e);
+
+        // Revert to previous value on error
         value.value = prev;
 
         const errorMessage =
@@ -221,23 +265,36 @@ const handleChange = async () => {
     }
 };
 
+/**
+ * Handle system color scheme changes
+ * Updates dark mode state when user switches system theme
+ */
 const handleColorSchemeChange = (e: MediaQueryListEvent) => {
     isDark.value = e.matches;
 };
 
-// Lifecycle
+/**
+ * Initialize component on mount
+ * Sets up color scheme detection and checks for pending toast messages
+ */
 onMounted(() => {
+    // Check for pending toast message from session storage
     const message = sessionStorage.getItem('nova-toggle-message');
     if (message) {
         sessionStorage.removeItem('nova-toggle-message');
         Nova.$toasted?.show(message, { type: 'success', duration: 3000 });
     }
 
+    // Initialize dark mode detection
     mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     isDark.value = mediaQuery.matches;
     mediaQuery.addEventListener('change', handleColorSchemeChange);
 });
 
+/**
+ * Cleanup on component unmount
+ * Removes color scheme change listener
+ */
 onBeforeUnmount(() => {
     mediaQuery?.removeEventListener('change', handleColorSchemeChange);
 });

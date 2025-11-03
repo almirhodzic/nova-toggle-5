@@ -13,7 +13,6 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Filters\BooleanFilter;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Illuminate\Http\Request;
 
 class Toggle extends Field
 {

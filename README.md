@@ -2,7 +2,7 @@
 
 A Laravel Nova 5 toggle field that allows quick boolean updates directly from the index view.
 
-![Nova-Toggle 5](https://demo.novafront.dev/images/hero/IndexToggle.webp)
+![Nova-Toggle 5](https://frontbyte.ch/storage/blog/B5bbbtGA8NIGlhzq39UeE0uaP2PqVb4emA6Mxnej.jpg)
 
 Demo: [https://demo.novafront.dev](https://demo.novafront.dev)  
 User: [demo@novafront.dev](demo@novafront.dev)  

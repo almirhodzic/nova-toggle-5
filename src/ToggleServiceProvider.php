@@ -37,11 +37,6 @@ class ToggleServiceProvider extends ServiceProvider
         Nova::serving(function (ServingNova $event) {
             // Register the compiled JavaScript component
             Nova::script('nova-toggle', __DIR__ . '/../dist/js/toggle.js');
-
-            // Register CSS if it exists (optional)
-            if (file_exists(__DIR__ . '/../dist/css/toggle.css')) {
-                Nova::style('nova-toggle', __DIR__ . '/../dist/css/toggle.css');
-            }
         });
 
         // Register routes after the application has fully booted

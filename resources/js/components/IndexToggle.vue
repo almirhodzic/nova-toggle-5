@@ -1,3 +1,9 @@
+<!--
+  Nova-Toggle 5 by Almir Hodzic
+  Original: https://github.com/almirhodzic/nova-toggle
+  Copyright (c) 2025 Almir Hodzic
+  MIT License
+-->
 <template>
     <div class="flex items-center gap-2" @click.stop>
         <div v-if="field.hidden" class="h-5 w-10"></div>

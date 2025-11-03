@@ -183,7 +183,7 @@ public function filters(NovaRequest $request): array
 }
 ```
 
-**Alternative: Boolean Filter (Checkboxes)**
+#### Alternative: Boolean Filter (Checkboxes)
 
 If you prefer checkboxes instead of a dropdown:
 

@@ -1,6 +1,5 @@
 {
     "name": "nova-toggle",
-    "version": "1.0.10",
     "private": true,
     "type": "module",
     "scripts": {

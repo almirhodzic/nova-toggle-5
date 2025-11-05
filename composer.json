@@ -23,7 +23,7 @@
         "issues": "https://github.com/almirhodzic/nova-toggle-5/issues",
         "source": "https://github.com/almirhodzic/nova-toggle-5"
     },
-    "homepage": "https://demo.novafront.dev",
+    "homepage": "https://novafront.dev",
     "require": {
         "php": "^8.2",
         "laravel/nova": "^5.0"

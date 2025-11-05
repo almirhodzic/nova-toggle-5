@@ -4,7 +4,7 @@ A Laravel Nova 5 toggle field that allows quick boolean updates directly from th
 
 ![Nova-Toggle 5](https://demo.novafront.dev/images/nova-toggle-github.png)
 
-Demo: [https://demo.novafront.dev](https://demo.novafront.dev)  
+Demo: [https://novafront.dev](https://novafront.dev)  
 User: [demo@novafront.dev](demo@novafront.dev)  
 Password: demo1234
 

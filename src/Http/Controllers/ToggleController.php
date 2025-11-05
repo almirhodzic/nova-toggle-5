@@ -39,7 +39,7 @@ class ToggleController extends Controller
     public function toggle(Request $request, string $resource, string $resourceId): JsonResponse
     {
         // Check authentication against configured guards
-        $guards = config('nova-toggle.guards', ['web']);
+        $guards = config('nova-toggle-5.guards', ['web']);
         $hasAccess = collect($guards)->contains(fn($guard) => auth()->guard($guard)->check());
 
         if (!$hasAccess) {

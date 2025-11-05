@@ -258,7 +258,7 @@ Toggle::make('Active', 'is_active')
 By default, the toggle checks authentication guards defined in your config. Create a config file:
 
 ```php
-// config/nova-toggle.php
+// config/nova-toggle-5.php
 return [
     'guards' => ['web', 'admin'],
 ];

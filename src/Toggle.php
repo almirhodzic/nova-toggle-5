@@ -456,7 +456,7 @@ class Toggle extends Field
 
         // Check authentication guards for readonly state
         if (!$readonly) {
-            $guards = config('nova-toggle.guards', ['web']);
+            $guards = config('nova-toggle-5.guards', ['web']);
             $hasAccess = collect($guards)->contains(fn($guard) => auth()->guard($guard)->check());
             $readonly = !$hasAccess;
         }

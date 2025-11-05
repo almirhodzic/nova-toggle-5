@@ -75,6 +75,6 @@ class ToggleServiceProvider extends ServiceProvider
      */
     private function collectGuardsFromFields(): array
     {
-        return config('nova-toggle.guards', ['web']);
+        return config('nova-toggle-5.guards', ['web']);
     }
 }

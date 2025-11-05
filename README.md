@@ -1,4 +1,4 @@
-# Nova-Toggle 5
+# Laravel Nova-Toggle 5
 
 A Laravel Nova 5 toggle field that allows quick boolean updates directly from the index view.
 
@@ -35,7 +35,7 @@ Password: demo1234
 ## Installation
 
 ```bash
-composer require almirhodzic/nova-toggle
+composer require almirhodzic/nova-toggle-5
 ```
 
 The service provider will be automatically registered.
@@ -43,7 +43,7 @@ The service provider will be automatically registered.
 ## Basic Usage
 
 ```php
-use AlmirHodzic\NovaToggle\Toggle;
+use AlmirHodzic\NovaToggle5\Toggle;
 
 public function fields(NovaRequest $request)
 {
@@ -267,7 +267,7 @@ return [
 ## Complete Example
 
 ```php
-use AlmirHodzic\NovaToggle\Toggle;
+use AlmirHodzic\NovaToggle5\Toggle;
 use App\Nova\Filters\IsActiveFilter;
 
 public function fields(NovaRequest $request)
@@ -357,13 +357,13 @@ public function filters(NovaRequest $request): array
 
 ## Bug or Issues
 
-Found a Bug or Issue? Please report here: [GitHub Issues](https://github.com/almirhodzic/nova-toggle/issues)  
+Found a Bug or Issue? Please report here: [GitHub Issues](https://github.com/almirhodzic/nova-toggle-5/issues)  
 We appreciate your feedback to help improve this package.
 
 ## Support
 
-- [Issues](https://github.com/almirhodzic/nova-toggle/issues)
-- [Source Code](https://github.com/almirhodzic/nova-toggle)
+- [Issues](https://github.com/almirhodzic/nova-toggle-5/issues)
+- [Source Code](https://github.com/almirhodzic/nova-toggle-5)
 
 ## License
 

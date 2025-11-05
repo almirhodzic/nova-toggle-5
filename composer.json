@@ -29,13 +29,13 @@
     },
     "autoload": {
         "psr-4": {
-            "AlmirHodzic\\NovaToggle\\": "src/"
+            "AlmirHodzic\\NovaToggle5\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "AlmirHodzic\\NovaToggle\\ToggleServiceProvider"
+                "AlmirHodzic\\NovaToggle5\\ToggleServiceProvider"
             ]
         }
     },

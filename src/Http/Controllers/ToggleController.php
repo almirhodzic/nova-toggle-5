@@ -2,12 +2,12 @@
 
 /**
  * Nova-Toggle 5 by Almir Hodzic
- * Original: https://github.com/almirhodzic/nova-toggle
+ * Original: https://github.com/almirhodzic/nova-toggle-5
  * Copyright (c) 2025 Almir Hodzic
  * MIT License
  */
 
-namespace AlmirHodzic\NovaToggle\Http\Controllers;
+namespace AlmirHodzic\NovaToggle5\Http\Controllers;
 
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;

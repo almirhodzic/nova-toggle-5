@@ -2,12 +2,12 @@
 
 /**
  * Nova-Toggle 5 by Almir Hodzic
- * Original: https://github.com/almirhodzic/nova-toggle
+ * Original: https://github.com/almirhodzic/nova-toggle-5
  * Copyright (c) 2025 Almir Hodzic
  * MIT License
  */
 
-namespace AlmirHodzic\NovaToggle;
+namespace AlmirHodzic\NovaToggle5;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;

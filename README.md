@@ -29,8 +29,6 @@ This Laravel Nova 5 Toggle Field removes the detour into the edit page and lets 
 
 - PHP 8.2+
 - Laravel Nova 5.x
-- Laravel 10.x, 11.x, or 12.x
-- Symfony HttpFoundation 7.3+ (required by Laravel 12 due to security advisory PKSA-365x-2zjk-pt47)
 
 ## Installation
 

@@ -12,7 +12,6 @@ namespace AlmirHodzic\NovaToggle5;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
-use Laravel\Nova\Http\Middleware\Authenticate;
 use Laravel\Nova\Nova;
 
 /**
@@ -48,33 +47,17 @@ class ToggleServiceProvider extends ServiceProvider
     /**
      * Register the package's API routes
      *
-     * Sets up the toggle endpoint with appropriate middleware and authentication.
-     * Routes are prefixed with 'nova-vendor/nova-toggle/toggle' and protected
-     * by web middleware and authentication guards
+     * Sets up the toggle endpoint behind Nova's own API middleware stack
+     * (config('nova.api_middleware')), which enforces the viewNova gate
+     * via Laravel\Nova\Http\Middleware\Authorize. Resource- and field-level
+     * authorization is enforced additionally in the controller.
      *
      * @return void
      */
     protected function routes(): void
     {
-        // Get the configured authentication guards
-        $guards = $this->collectGuardsFromFields();
-
-        // Register routes with middleware and authentication
-        Route::middleware(['web', 'auth:' . implode(',', $guards)])
+        Route::middleware(['nova:api'])
             ->prefix('nova-vendor/nova-toggle/toggle')
             ->group(__DIR__ . '/../routes/api.php');
-    }
-
-    /**
-     * Collect authentication guards from configuration
-     *
-     * Retrieves the guards that should be used for authenticating toggle requests.
-     * Falls back to 'web' guard if no configuration is present.
-     *
-     * @return array Array of guard names (e.g., ['web', 'admin'])
-     */
-    private function collectGuardsFromFields(): array
-    {
-        return config('nova-toggle-5.guards', ['web']);
     }
 }

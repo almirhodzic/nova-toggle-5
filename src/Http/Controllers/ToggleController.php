@@ -9,10 +9,11 @@
 
 namespace AlmirHodzic\NovaToggle5\Http\Controllers;
 
-use Laravel\Nova\Nova;
-use Illuminate\Http\Request;
+use AlmirHodzic\NovaToggle5\Toggle;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Nova;
 
 /**
  * Controller for handling toggle field state changes
@@ -26,45 +27,58 @@ class ToggleController extends Controller
      * Toggle a boolean attribute on a Nova resource
      *
      * This endpoint handles the toggling of boolean fields directly from the index view.
-     * It performs authentication checks, validates the resource and attribute,
-     * updates the model, logs the action event, and returns the new state with label.
+     * Authentication against the viewNova gate is enforced by the nova:api middleware
+     * group. This method additionally enforces resource-level update authorization and
+     * restricts writable attributes to those declared as Toggle fields on the resource.
      *
-     * @param Request $request The HTTP request containing attribute and labelKey
+     * @param NovaRequest $request The Nova-aware HTTP request containing attribute and labelKey
      * @param string $resource The Nova resource key (e.g., 'users', 'posts')
      * @param string $resourceId The ID of the resource/model to update
      * @return JsonResponse JSON response with success status, new value, and label
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If resource not found
      */
-    public function toggle(Request $request, string $resource, string $resourceId): JsonResponse
+    public function toggle(NovaRequest $request, string $resource, string $resourceId): JsonResponse
     {
-        // Check authentication against configured guards
-        $guards = config('nova-toggle-5.guards', ['web']);
-        $hasAccess = collect($guards)->contains(fn($guard) => auth()->guard($guard)->check());
-
-        if (!$hasAccess) {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
-
         // Resolve the Nova resource class from the resource key
         $resourceClass = Nova::resourceForKey($resource);
 
-        if (!$resourceClass) {
+        if (! $resourceClass) {
             return response()->json(['error' => 'Resource not found'], 404);
         }
 
         // Find the model instance by ID (throws 404 if not found)
         $model = $resourceClass::newModel()->findOrFail($resourceId);
 
+        // Wrap the model in the Nova resource so we can evaluate authorization
+        // and field definitions exactly as Nova would in its own index/update flow.
+        $novaResource = new $resourceClass($model);
+
+        if (! $novaResource->authorizedToUpdate($request)) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
         // Get the attribute name to toggle (e.g., 'is_active', 'show')
         $attribute = $request->input('attribute');
 
-        if (!$attribute) {
+        if (! $attribute) {
             return response()->json(['error' => 'Attribute required'], 400);
         }
 
+        // Whitelist: only attributes exposed via a Toggle field on this resource may be
+        // changed through this endpoint. This prevents callers from targeting arbitrary
+        // boolean columns (e.g. is_admin) that were never meant to be toggled here, and
+        // respects per-field visibility/readonly rules.
+        $toggleField = collect($novaResource->availableFields($request))
+            ->first(fn ($field) => $field instanceof Toggle
+                && $field->attribute === $attribute
+                && ! $field->isReadonly($request)
+            );
+
+        if (! $toggleField) {
+            return response()->json(['error' => 'Attribute not toggleable'], 403);
+        }
+
         // Toggle the boolean value
-        $newValue = !$model->{$attribute};
+        $newValue = ! $model->{$attribute};
         $model->{$attribute} = $newValue;
 
         // Log the update action in Nova's action events
@@ -83,7 +97,7 @@ class ToggleController extends Controller
         return response()->json([
             'success' => true,
             'value' => $newValue,
-            'label' => $label
+            'label' => $label,
         ]);
     }
 }

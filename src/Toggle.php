@@ -454,13 +454,6 @@ class Toggle extends Field
             $readonly = call_user_func($this->readonlyWhenCallback, $request, $this->resource ?? null);
         }
 
-        // Check authentication guards for readonly state
-        if (!$readonly) {
-            $guards = config('nova-toggle-5.guards', ['web']);
-            $hasAccess = collect($guards)->contains(fn($guard) => auth()->guard($guard)->check());
-            $readonly = !$hasAccess;
-        }
-
         return array_merge(parent::jsonSerialize(), [
             'readonly' => $readonly,
             'hidden' => $hidden,

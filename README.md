@@ -38,6 +38,27 @@ composer require almirhodzic/nova-toggle-5
 
 The service provider will be automatically registered.
 
+## Upgrading from 1.2 to 1.3
+
+Version 1.3.0 contains a security fix that changes how the toggle endpoint is
+authorized. For most installations the upgrade is a drop-in: just run
+`composer update almirhodzic/nova-toggle-5`.
+
+What changed:
+
+- The toggle endpoint is now protected by Nova's own `nova:api` middleware. Only
+  users who pass the `viewNova` gate can reach it.
+- The controller additionally checks the resource's `authorizedToUpdate` policy
+  and only allows writes to attributes that are actually exposed as a `Toggle`
+  field on the resource.
+- The `config/nova-toggle-5.php` file (with its `guards` option) has been
+  removed. If you previously published it, you can delete it — it is no longer
+  read.
+
+If you were relying on the old `guards` config to grant toggle access to users
+that do **not** pass the `viewNova` gate, make sure those users are now either
+allowed by the gate or no longer need toggle access.
+
 ## Basic Usage
 
 ```php
@@ -251,16 +272,15 @@ Toggle::make('Active', 'is_active')
     });
 ```
 
-#### Guard-Based Access Control
+#### Authorization
 
-By default, the toggle checks authentication guards defined in your config. Create a config file:
+Toggle requests are protected by Nova's own API middleware, so only users who pass Nova's
+`viewNova` gate can reach the endpoint. On top of that, the controller enforces the
+resource's `authorizedToUpdate` policy and only allows writes to attributes that are actually
+exposed as a `Toggle` field on the resource (and are not readonly in the current context).
 
-```php
-// config/nova-toggle-5.php
-return [
-    'guards' => ['web', 'admin'],
-];
-```
+No additional configuration is required — the toggle follows the same access rules as Nova
+itself.
 
 ## Complete Example
 

@@ -46,7 +46,13 @@ class ToggleController extends Controller
         }
 
         // Find the model instance by ID (throws 404 if not found)
-        $model = $resourceClass::newModel()->findOrFail($resourceId);
+        $query = $resourceClass::newModel()->newQuery();
+
+        if ($resourceClass::softDeletes()) {
+            $query->withTrashed();
+        }
+
+        $model = $query->findOrFail($resourceId);
 
         // Wrap the model in the Nova resource so we can evaluate authorization
         // and field definitions exactly as Nova would in its own index/update flow.

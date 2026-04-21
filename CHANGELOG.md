@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.3.1 - 2026-04-21
+
+### Fixed
+
+- The toggle endpoint returned a 404 for soft-deleted records, making the
+  toggle unusable from "With Trashed" / lens views that surface trashed rows.
+  The lookup now applies `withTrashed()` when the Nova resource uses soft
+  deletes. Authorization and the toggleable-attribute whitelist continue to
+  apply to trashed records.
+
+  Thanks to [Roberto Negro](https://github.com/RobertoNegro) for the fix
+  ([#2](https://github.com/almirhodzic/nova-toggle-5/pull/2)).
+
 ## v1.3.0 - 2026-04-20
 
 ### Security
